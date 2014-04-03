@@ -1,0 +1,50 @@
+- project:
+    name: helloworld
+    branch:
+        - 'master'
+        - 'develop'
+    keep_build_num: 5
+    keep_build_days: 5
+    jobs:
+        - 'build_{name}_{branch}'
+
+- job-template:
+    name: 'build_{name}_{branch}'
+    description: 'Simple Jenkins job building git branch {branch}'
+    project-type: freestyle
+    defaults: global
+    disabled: false
+    display-name: 'Build {name} on branch {branch}'
+    concurrent: true
+    quiet-period: 5
+    block-downstream: false
+    block-upstream: false
+
+    logrotate:
+        daysToKeep: '{keep_build_days}'
+        numToKeep: '{keep_build_num}'
+        artifactDaysToKeep: -1
+        artifactNumToKeep: -1
+
+    parameters:
+        - string:
+            name: FOO
+            default: 'This is contents of FOO'
+            description: 'Set FOO to show it'
+    scm:
+        - git:
+            url: git@github.com:velniukas/helloworld.git
+            skip-tag: True
+            branches: 
+                - '{branch}'
+
+    builders:
+        - shell: |
+            uname -a
+            echo "FOO parameter $FOO"
+        - maven-target:
+            goals: 'clean compile'
+
+    publishers:
+        - email:
+            recipients: 

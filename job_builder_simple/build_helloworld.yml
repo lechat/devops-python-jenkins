@@ -1,0 +1,34 @@
+- job:
+    name: build_helloworld
+    description: 'Simple Jenkins job'
+    project-type: freestyle
+    defaults: global
+    disabled: false
+    display-name: 'Build Helloworld'
+    concurrent: true
+    quiet-period: 5
+    block-downstream: false
+    block-upstream: false
+
+    parameters:
+        - string:
+            name: FOO
+            default: 'This is contents of FOO'
+            description: 'Set FOO to show it'
+    scm:
+        - git:
+            url: git@github.com:velniukas/helloworld.git
+            skip-tag: True
+            branches:
+                - master
+
+    builders:
+        - shell: |
+            uname -a
+            echo "FOO parameter $FOO"
+        - maven-target:
+            goals: 'clean compile'
+
+    publishers:
+        - email:
+            recipients: 
