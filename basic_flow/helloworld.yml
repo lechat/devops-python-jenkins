@@ -1,0 +1,129 @@
+- project:
+    name: helloworld
+    keep_build_num: 5
+    keep_build_days: 5
+    jobs:
+        - 'compile_{name}'
+        - 'fast_test_{name}'
+        - 'slow_test_{name}'
+        - 'package_{name}'
+
+- job-template:
+    name: 'compile_{name}'
+    description: 'Simple Jenkins job building'
+    project-type: freestyle
+    defaults: global
+    disabled: false
+    display-name: 'Compile {name}'
+    quiet-period: 0
+    block-downstream: false
+    block-upstream: false
+
+    logrotate:
+        daysToKeep: '{keep_build_days}'
+        numToKeep: '{keep_build_num}'
+        artifactDaysToKeep: -1
+        artifactNumToKeep: -1
+
+    scm:
+        - git:
+            url: git@github.com:velniukas/helloworld.git
+            skip-tag: True
+            branches:
+                - 'master'
+
+    builders:
+        - maven-target:
+            goals: 'clean compile'
+
+- job-template:
+    name: 'fast_test_{name}'
+    description: 'Run Fast Test'
+    project-type: freestyle
+    defaults: global
+    disabled: false
+    display-name: 'Execute Fast test'
+    quiet-period: 0
+    block-downstream: false
+    block-upstream: false
+
+    logrotate:
+        daysToKeep: '{keep_build_days}'
+        numToKeep: '{keep_build_num}'
+        artifactDaysToKeep: -1
+        artifactNumToKeep: -1
+
+    scm:
+        - git:
+            url: git@github.com:velniukas/helloworld.git
+            skip-tag: True
+            branches:
+                - 'master'
+
+    builders:
+        - maven-target:
+            goals: 'test'
+            properties:
+                - test=HelloWorldTest#testHelloEmpty
+
+- job-template:
+    name: 'slow_test_{name}'
+    description: 'Execute slow test'
+    project-type: freestyle
+    defaults: global
+    disabled: false
+    display-name: 'Execute Slow test'
+    quiet-period: 0
+    block-downstream: false
+    block-upstream: false
+
+    logrotate:
+        daysToKeep: '{keep_build_days}'
+        numToKeep: '{keep_build_num}'
+        artifactDaysToKeep: -1
+        artifactNumToKeep: -1
+
+    scm:
+        - git:
+            url: git@github.com:velniukas/helloworld.git
+            skip-tag: True
+            branches:
+                - 'master'
+
+    builders:
+        - maven-target:
+            goals: 'test'
+            properties:
+                - test=HelloWorldTest#testHelloWorld
+        - shell:
+            sleep 20
+
+- job-template:
+    name: 'package_{name}'
+    description: 'Package'
+    project-type: freestyle
+    defaults: global
+    disabled: false
+    display-name: 'Package {name}'
+    quiet-period: 0
+    block-downstream: false
+    block-upstream: false
+
+    logrotate:
+        daysToKeep: '{keep_build_days}'
+        numToKeep: '{keep_build_num}'
+        artifactDaysToKeep: -1
+        artifactNumToKeep: -1
+
+    scm:
+        - git:
+            url: git@github.com:velniukas/helloworld.git
+            skip-tag: True
+            branches:
+                - 'master'
+
+    builders:
+        - maven-target:
+            goals: 'package'
+            parameters:
+                - maven.test.skip=true
