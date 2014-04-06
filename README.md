@@ -13,20 +13,20 @@ This project uses following Open Source libraries and products:
 
 Example 1
 =========
-save-jobs-xml - Shows how to download job config.xml using ``jenkinsapi``
+save_job_xml - Shows how to download job config.xml using ``jenkinsapi``
 
 
 Example 2
 =========
-job-builder-simple - Shows how to create simple jobs using ``jenkins-job-builder``
+job_builder_simple - Shows how to create simple jobs using ``jenkins-job-builder``
 
 
 Example 3
 =========
-job-builder-template - Shows how to create build job per branch using ``jenkins-job-builder`` templates and user defined variables
+job_builder_template - Shows how to create build job per branch using ``jenkins-job-builder`` templates and user defined variables
 
 
 Example 4
 =========
-basic-flow - Shows how to create simple ``jenkinsflow`` script to execute build pipeline
+basic_flow - Shows how to create simple ``jenkinsflow`` script to execute build pipeline
 
