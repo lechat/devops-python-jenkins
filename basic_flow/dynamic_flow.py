@@ -6,15 +6,14 @@ from jenkinsflow.flow import serial
 
 
 def main(api):
-    logging.basicConfig()
-    logging.getLogger("").setLevel(logging.WARNING)
 
+    my_jobs = ['fast_test_helloworld', 'slow_test_helloworld']
     with serial(api, timeout=200, report_interval=3) as ctrl1:
         ctrl1.invoke('compile_helloworld')
 
         with ctrl1.parallel(timeout=200, report_interval=3) as ctrl2:
-            ctrl2.invoke('fast_test_helloworld')
-            ctrl2.invoke('slow_test_helloworld')
+            for job_name in my_jobs:
+                ctrl2.invoke(job_name)
 
         ctrl1.invoke('package_helloworld')
 

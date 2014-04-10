@@ -27,7 +27,7 @@
 
     scm:
         - git:
-            url: git@github.com:velniukas/helloworld.git
+            url: file:///home/aleksey/src/helloworld/
             skip-tag: True
             branches:
                 - 'master'
@@ -55,7 +55,7 @@
 
     scm:
         - git:
-            url: git@github.com:velniukas/helloworld.git
+            url: file:///home/aleksey/src/helloworld/
             skip-tag: True
             branches:
                 - 'master'
@@ -85,7 +85,7 @@
 
     scm:
         - git:
-            url: git@github.com:velniukas/helloworld.git
+            url: file:///home/aleksey/src/helloworld/
             skip-tag: True
             branches:
                 - 'master'
@@ -117,7 +117,7 @@
 
     scm:
         - git:
-            url: git@github.com:velniukas/helloworld.git
+            url: file:///home/aleksey/src/helloworld/
             skip-tag: True
             branches:
                 - 'master'

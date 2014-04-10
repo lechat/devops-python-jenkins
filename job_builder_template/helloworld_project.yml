@@ -33,7 +33,7 @@
             description: 'Set FOO to show it'
     scm:
         - git:
-            url: git@github.com:velniukas/helloworld.git
+            url: file:///home/aleksey/src/helloworld/
             skip-tag: True
             branches: 
                 - '{branch}'
